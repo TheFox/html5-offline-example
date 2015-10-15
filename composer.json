@@ -1,0 +1,5 @@
+{
+	"require": {
+		"components/jquery": "~2.1"
+	}
+}

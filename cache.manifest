@@ -1,0 +1,13 @@
+CACHE MANIFEST
+
+# rev 1
+
+NETWORK:
+data.php
+
+CACHE:
+vendor/components/jquery/jquery.min.js
+lib/persist-js/persist-min.js
+
+FALLBACK:
+/ offline.html

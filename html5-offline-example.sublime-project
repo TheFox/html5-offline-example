@@ -1,0 +1,10 @@
+{
+	"folders":[
+		{
+			"path": ".",
+			"name": "HTML5 Offline Example",
+			"folder_exclude_patterns": [ "vendorx" ],
+			"file_exclude_patterns": [ ]
+		}
+	]
+}

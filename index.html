@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.manifest">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<script type="text/javascript" src="vendor/components/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="lib/persist-js/persist-min.js"></script>
+		
+		<script>
+			var online = null;
+			var store;
+			
+			function logAdd(text){
+				var td = $('<td>');
+				td.html(text);
+				
+				var tr = $('<tr>');
+				tr.append(td);
+				
+				var table = $('#log');
+				table.prepend(tr);
+			}
+			
+			$(document).ready(function(){
+				if(typeof(Storage) !== 'undefined'){
+					store = new Persist.Store('App1');
+					
+					var k1val = store.get('key1');
+					console.log(k1val);
+					if(k1val == null){
+						var d = new Date();
+						store.set('key1', 'val1 ' + d);
+					}
+				}
+				else{
+					logAdd('ERROR: Storage not available.');
+					return;
+				}
+				$('#button1').click(function(){
+					logAdd('Click');
+					
+					if(online){
+						$.get('data.php', function(data){
+							logAdd('Request done: ' + data.date);
+						});
+					}
+					else{
+						// Store values with 'store'.
+						logAdd('You are offline. Nothing has been sent to the server.');
+					}
+				});
+				
+				window.addEventListener('offline', function(event){ logAdd('Offline'); online = false; }, false);
+				window.addEventListener('online', function(event){ logAdd('Online'); online = true; }, false);
+				
+				online = navigator.onLine;
+				
+				logAdd('Loaded: ' + (online ? 'Online' : 'Offline'));
+			});
+		</script>
+		
+		<title>Offline Storage</title>
+	</head>
+	<body>
+		<p><button id="button1">Test</button></p>
+		<p><a href="deeplink.html">Deeplink</a></p>
+		
+		<table id="log">
+			<tr><td>Log</td></tr>
+		</table>
+	</body>
+</html>
